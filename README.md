@@ -71,9 +71,9 @@
 
 1. 
 
-git clone https://github.com/netology-code/sdvps-materials.git
+git clone 'https://github.com/netology-code/sdvps-materials.git'
 git remote -v
-git remote add gitlab http://158.160.133.253/root/my.git
+git remote add 'gitlab http://158.160.133.253/root/my.git'
 git remote -v
 git push gitlab
 
@@ -81,26 +81,25 @@ git push gitlab
 2. 
 nano .gitlab-ci.yml
    
-stages:
-  - test
-  - build
-
-test:
-  stage: test
-  image: golang:1.17
-  script: 
-   - go test .
-
-build:
-  stage: build
-  image: docker:latest
-  script:
-   - docker build .
+[![yaml.png](https://i.postimg.cc/sXMyF5Z1/yaml.png)](https://postimg.cc/njfNBj2t)
       
+
+
+
+
+
+
+
+
+
 git status
 git add .
 git commit -am "add gitlab-ci.yml"
 git push gitlab
+
+
+
+
 
 
 
