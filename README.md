@@ -71,7 +71,7 @@
 
 1. 
 
-git clone 'https://github.com/netology-code/sdvps-materials.git'
+git clone https://github.com/netology-code/sdvps-materials.git
 git remote -v
 git remote add 'gitlab http://158.160.133.253/root/my.git'
 git remote -v
@@ -96,6 +96,10 @@ git status
 git add .
 git commit -am "add gitlab-ci.yml"
 git push gitlab
+
+
+
+
 
 
 
