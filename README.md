@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "GitLab" - `Николашкин Артем`
+# Домашнее задание к занятию "Система мониторинга Zabbix" - `Николашкин Артем`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -23,46 +23,50 @@
 ---
 ### Задание 1
 
-Что нужно сделать:
+Установите Zabbix Server с веб-интерфейсом.
 
-1. Разверните GitLab локально, используя Vagrantfile и инструкцию, описанные в [этом репозитории.](https://github.com/netology-code/sdvps-materials/tree/main/gitlab)
+Процесс выполнения
 
-2. Создайте новый проект и пустой репозиторий в нём.
+1. Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
+2. Установите PostgreSQL. Для установки достаточна та версия, что есть в системном репозитороии Debian 11.
+3. Пользуясь конфигуратором команд с официального сайта, составьте набор команд для установки последней версии Zabbix с поддержкой PostgreSQL и Apache.
+4. Выполните все необходимые команды для установки Zabbix Server и Zabbix Web Server.
 
-3. Зарегистрируйте gitlab-runner для этого проекта и запустите его в режиме Docker. Раннер можно регистрировать и запускать на той же виртуальной машине, на которой запущен GitLab.
+Требования к результатy
 
-В качестве ответа в репозиторий шаблона с решением добавьте скриншоты с настройками раннера в проекте.
+1. Прикрепите в файл README.md скриншот авторизации в админке.
+2. Приложите в файл README.md текст использованных команд в GitHub.
 
 
-### Задание 2
-Что нужно сделать:
 
-1. Запушьте [репозиторий]( https://github.com/netology-code/sdvps-materials/tree/main/gitlab) на GitLab, изменив origin. Это изучалось на занятии по Git.
-
-2. Создайте .gitlab-ci.yml, описав в нём все необходимые, на ваш взгляд, этапы.
-
-В качестве ответа в шаблон с решением добавьте:
-файл gitlab-ci.yml для своего проекта или вставьте код в соответствующее поле в шаблоне;
-скриншоты с успешно собранными сборками.
 
 
 
 ### Решение 1
 
+wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu22.04_all.deb
 
-1. использовал яндекс облако
+dpkg -i zabbix-release_6.0-4+ubuntu22.04_all.deb
 
-[![GitLab1.png](https://i.postimg.cc/441tcjcW/GitLab1.png)](https://postimg.cc/YjhhKnbF)
+apt update 
 
+apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts
 
-2. 
-[![Gitlab2.png](https://i.postimg.cc/sXmY3L9H/Gitlab2.png)](https://postimg.cc/62720YPC)
+sudo -u postgres createuser --pwprompt zabbix
 
+sudo -u postgres createdb -O zabbix zabbix 
 
-3. 
-[![gitlab3.png](https://i.postimg.cc/MGTMyGy5/gitlab3.png)](https://postimg.cc/K168bxp3)
+zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix 
 
+sudo nano /etc/zabbix/zabbix_server.conf 
 
+DBPassword=password
+
+systemctl restart zabbix-server zabbix-agent apache2
+
+systemctl enable zabbix-server zabbix-agent apache2
+
+[![zabbix.png](https://i.postimg.cc/g0mLCSQ8/zabbix.png)](https://postimg.cc/Sn1K8ryx)
 
 
 ---
@@ -71,42 +75,6 @@
 
 1. 
 
-git clone https://github.com/netology-code/sdvps-materials.git
-git remote -v
-git remote add 'gitlab http://158.160.133.253/root/my.git'
-git remote -v
-git push gitlab
 
-
-2. 
-nano .gitlab-ci.yml
-   
-[![yaml.png](https://i.postimg.cc/sXMyF5Z1/yaml.png)](https://postimg.cc/njfNBj2t)
-      
-
-
-
-
-
-
-
-
-
-git status
-git add .
-git commit -am "add gitlab-ci.yml"
-git push gitlab
-
-
-
-
-
-
-
-
-
-
-
-[![PiPeLine.png](https://i.postimg.cc/6qgywsTX/PiPeLine.png)](https://postimg.cc/5Q5xqRw7)
 
 
